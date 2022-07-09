@@ -11,30 +11,31 @@ class App extends Component {
     good: 0,
     neutral: 0,
     bad: 0
-  }
+  };
 
   onClickStatistics = (e) => {
     const { name } = e.currentTarget;
     this.setState({ [name]: this.state[name] + 1 })
-  }
+  };
 
   countTotalFeedback = () => {
     return Object.values( this.state ).reduce(( acc,cur ) => acc += cur, 0)
-  }
+  };
 
   countPositiveFeedbackPercentage = () => {
     const { good } = this.state;
     const total = this.countTotalFeedback();
     return Math.floor(( good * 100 ) / total)
-  }
+  };
 
   showStats = () => {
     return this.countTotalFeedback() > 0
-  }
+  };
 
   render() {
+    const notification = "No feedback given yet...";
     const title = "Please leave feedback";
-    const btnNames = [ "good", "neutral", "bad" ]
+    const btnNames = Object.keys(this.state);
     const total = this.countTotalFeedback();
     const percentage = this.countPositiveFeedbackPercentage()
     return (
@@ -48,7 +49,7 @@ class App extends Component {
               percentage={ percentage }
             />
           :
-          <Notification/>
+          <Notification notification={ notification }/>
           }
         </Section>
       </Container>

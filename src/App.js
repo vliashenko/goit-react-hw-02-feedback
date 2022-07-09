@@ -22,7 +22,7 @@ class App extends Component {
     return Object.values( this.state ).reduce(( acc,cur ) => acc += cur, 0)
   }
 
-  ountPositiveFeedbackPercentage = () => {
+  countPositiveFeedbackPercentage = () => {
     const { good } = this.state;
     const total = this.countTotalFeedback();
     return Math.floor(( good * 100 ) / total)
@@ -34,15 +34,18 @@ class App extends Component {
 
   render() {
     const title = "Please leave feedback";
+    const btnNames = [ "good", "neutral", "bad" ]
+    const total = this.countTotalFeedback();
+    const percentage = this.countPositiveFeedbackPercentage()
     return (
       <Container>
         <Section title={ title }>
-          <FeedbackOptions options={ this.state } onClick={this.onClickStatistics}/>
+          <FeedbackOptions  names={ btnNames }  onClick={this.onClickStatistics}/>
             {this.showStats() ?
             <Statistics 
-              state ={ this.state } 
-              total={ this.countTotalFeedback } 
-              positivePercentage={ this.ountPositiveFeedbackPercentage }
+              state={ this.state }
+              total={ total } 
+              percentage={ percentage }
             />
           :
           <Notification/>

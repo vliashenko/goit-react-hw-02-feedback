@@ -1,29 +1,27 @@
 import React from 'react';
 import { Container, List, ListItem, Total, Percentage } from "./Statistics.styled";
-import { normalizeCase } from '../../services/NormalizeCase';
-import shortid from "shortid";
 import PropTypes from "prop-types";
 
-const Statistics = ({ state, total, positivePercentage }) => {
-    
-    const optionKeys = Object.keys(state);
-    const optionValues = Object.values(state);
+const Statistics = ({ state, total, percentage }) => {
+
+    const options = Object.entries(state)
 
     return (
         <Container>
             <List>
-                {optionKeys.map(( option,i ) => {
-                    let id = shortid.generate();
+                {options.map( item => {
+                    let key = item[0];
+                    let value = item[1];
                     return (
-                        <ListItem key={ id }> { normalizeCase(option) }: { optionValues[i] } </ListItem>
+                        <ListItem key={ key }> { key }: { value } </ListItem>
                     )
                 })}
             </List>
                 <Total> 
-                    Total: { total() } 
+                    Total: { total } 
                 </Total>
                 <Percentage>
-                    Positive feedback: { positivePercentage() }%
+                    Positive feedback: { percentage }%
                 </Percentage>
         </Container>
     );
@@ -31,8 +29,8 @@ const Statistics = ({ state, total, positivePercentage }) => {
 
 Statistics.propTypes = {
     state: PropTypes.objectOf(PropTypes.number).isRequired,
-    total: PropTypes.func.isRequired,
-    positivePercentage: PropTypes.func.isRequired
+    total: PropTypes.number.isRequired,
+    percentage: PropTypes.number.isRequired
 }
 
 export default Statistics;

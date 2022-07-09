@@ -1,13 +1,12 @@
 import React from 'react';
+import { normalizeCase } from '../../utils/NormalizeCase';
 import { Container, Button } from "./FeedbackOptions.styles";
-import { normalizeCase } from '../../services/NormalizeCase';
 import PropTypes from "prop-types";
 
-const FeedbackOptions = ({ options, onClick }) => {
-    const optionKeys = Object.keys(options);
+const FeedbackOptions = ({ names, onClick }) => {
     return (
         <Container>
-            {optionKeys.map(( option, i ) => {
+            {names.map(( option, i ) => {
                 return (
                     <Button 
                         key={ i } 
@@ -23,7 +22,7 @@ const FeedbackOptions = ({ options, onClick }) => {
 };
 
 FeedbackOptions.propTypes = {
-    options: PropTypes.objectOf(PropTypes.number).isRequired,
+    names: PropTypes.arrayOf(PropTypes.string).isRequired,
     onClick: PropTypes.func.isRequired
 }
 
